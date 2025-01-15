@@ -1,4 +1,4 @@
-const jobs = [
+export const jobs = [
     {
         position: "Waste Management Program Assistant",
         business: "Chenango County Department of Public Works",

@@ -2,10 +2,10 @@ import {education} from "../../public/information/education"
 
 const PopulateEducation = () => {
     return (
-        <div>
+        <div id = "school-card-wrapper" className = "flex flex-wrap w-full justify-evenly items-stretch">
             {education.map((school) => {
                 return (
-                    <div className = "school-card" key = {school.id}>
+                    <div className = "school-card w-80 sm:w-[483px] p-4 flex flex-col gap-2" key = {school.id}>
                         {school.degree.map((degree) => {
                             return <p key = {degree}>{degree}</p>
                         })}
