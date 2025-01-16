@@ -11,22 +11,22 @@ const Page = () => {
             <ResumeHeader />
 
             <section id = "work">
-                <h3>Work History</h3>
+                <h3 className = "text-xl font-bold">Work History</h3>
                 <PopulateJobs />
             </section>
 
             <section id = "education">
-                <h3>Education</h3>
+                <h3 className = "text-xl font-bold">Education</h3>
                 <PopulateEducation />
             </section>
 
             <section id = "misc">
-                <h3>Certificates</h3>
+                <h3 className = "text-xl font-bold">Certificates</h3>
                 <PopulateCertificates />
             </section>
 
             <section id = "Projects">
-                <h3>Projects</h3>
+                <h3 className = "text-xl font-bold">Projects</h3>
             </section>
         </article>
     )

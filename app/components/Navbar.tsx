@@ -3,9 +3,9 @@ import Link from "next/link";
 
 const Navbar = () => {
     return (
-        <div>
-            <Link href = "/">Home</Link>
-            <Link href = "../resume">Resume</Link>
+        <div className = "flex flex-col px-4">
+            <Link className = "nav-btn py-4" href = "/">Home</Link>
+            <Link className = "nav-btn py-4" href = "../resume">Resume</Link>
         </div>
     )
 }
