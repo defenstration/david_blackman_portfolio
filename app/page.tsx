@@ -20,7 +20,7 @@ export default function Home() {
 
           <div id = "about-header" className = "flex w-full justify-evenly">
             <div id = "my-pic-container" >
-              <Image src = "/assets/gelly-pic.jpg" alt = "My picture" height = "500" width = "500" id = "my-pic" />
+              <Image src = "/assets/recyclinglogo2024.png" alt = "My picture" height = "500" width = "500" id = "my-pic" />
               <p>This is me. I know, not as cute right?</p>
             </div>
 
