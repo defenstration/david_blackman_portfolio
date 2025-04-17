@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/Header"
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import CanvasBackground from "./components/CanvasBackground";
 
 
 const geistSans = Geist({
@@ -28,8 +29,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      
 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased grid w-full h-auto min-h-dvh`}>
+      <CanvasBackground />
         <Header />
         <main className = "flex">
           <Navbar />
