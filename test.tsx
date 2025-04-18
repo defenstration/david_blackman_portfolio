@@ -1,6 +1,5 @@
 'use client'
 
-// import path from 'path'
 import {useEffect, useRef, useState} from 'react'
 
 export default function CanvasBackground() {
@@ -32,7 +31,7 @@ export default function CanvasBackground() {
         const seeds = Array.from({length: 30}, () => ({
             x: Math.floor(Math.random()*cols) * gridSize,
             y: Math.floor(Math.random()*rows) * gridSize,
-         }))
+        }))
 
         const getClosestSeed = (x: number, y: number) => {
             let minDist = Infinity
@@ -46,9 +45,8 @@ export default function CanvasBackground() {
             })
             return index
         }
-        
-        const segments: {x1: number, y1: number, x2: number, y2: number}[] = []
 
+        const segments: {x1: number, y1: number, x2: number, y2: number}[] = []
 
         for (let x = 0; x < width; x += gridSize) {
             for (let y = 0; y < height; y+= gridSize) {
@@ -76,20 +74,20 @@ export default function CanvasBackground() {
             }
         }
 
-        const dots = segments.map((segment) => ({
+        const pulses = segments.map((segment) => ({
             ...segment,
             progress: Math.random(),
             speed: .005 + Math.random() * .01
         }))
 
-        const pathDots: typeof dots = []
-        let flash: {x: number; y: number; opacity: number} | null = null
+        const pathDots: typeof pulses = []
+        let flash: { x: number; y: number; opacity: number } | null = null
 
         const spawnPathDot = () => {
             if (pathDots.length >= 2) return
             const seg = segments[Math.floor(Math.random() * segments.length)]
             pathDots.push({
-                ...seg, 
+                ...seg,
                 progress: 0,
                 speed: 0.005 + Math.random() * 0.01
             })
@@ -122,8 +120,8 @@ export default function CanvasBackground() {
                 ctx.stroke()
             })
 
-            const activeDots = mode === 'path' ? pathDots : dots
-    
+            const activeDots = mode === 'pulse' ? pulses : pathDots
+
             activeDots.forEach((dot) => {
                 dot.progress += dot.speed
                 if (dot.progress > 1) {
@@ -131,7 +129,7 @@ export default function CanvasBackground() {
                     if (mode === 'path') {
                         const seg = segments[Math.floor(Math.random() * segments.length)]
                         dot.x1 = seg.x1
-                        dot.y1 = seg.y1 
+                        dot.y1 = seg.y1
                         dot.x2 = seg.x2
                         dot.y2 = seg.y2
                     }
@@ -158,20 +156,18 @@ export default function CanvasBackground() {
                 const dist = Math.hypot(ax - bx, ay - by)
 
                 if (dist < 10 && !flash) {
-                    flash = {x: (ax + bx) /2, y: (ay + by) / 2, opacity: 1}
+                    flash = { x: (ax + bx) / 2, y: (ay + by) / 2, opacity: 1 }
                     pathDots.length = 0
                 }
             }
 
             if (flash) {
                 ctx.beginPath()
-                ctx.fillStyle = `rgba(255, 255, 255, ${flash.opacity})`
+                ctx.fillStyle = `rgba(255,255,255,${flash.opacity})`
                 ctx.arc(flash.x, flash.y, 20, 0, Math.PI * 2)
                 ctx.fill()
-                flash.opacity -= .05 
-                if (flash.opacity <= 0) {
-                    flash = null
-                }
+                flash.opacity -= 0.05
+                if (flash.opacity <= 0) flash = null
             }
 
             requestAnimationFrame(animate)
@@ -181,22 +177,20 @@ export default function CanvasBackground() {
 
         return () => {
             window.removeEventListener('resize', resizeCanvas)
-
         }
     }, [mode])
 
     return (
         <>
-        <canvas
-            ref = {canvasRef}
-            className = 'fixed inset-0 z-[-1]' />
-        <button 
-            onClick = {() => setMode(mode === 'path' ? 'pulse' : 'path')}
-            className = 'absolute top-4 left-4 bg-white text-black p-2 rounded'>
+            <canvas
+                ref = {canvasRef}
+                className = 'fixed inset-0 z-[-1]' />
+            <button
+                onClick={() => setMode(mode === 'path' ? 'pulse' : 'path')}
+                className="fixed top-4 right-4 z-10 px-4 py-2 bg-black text-cyan-300 border border-cyan-500 rounded"
+            >
                 Mode: {mode === 'path' ? 'Path (2 Dots)' : 'Pulse (Multiple Dots)'}
-        </button>
-
+            </button>
         </>
     )
-
 }
