@@ -4,7 +4,7 @@ import PopulateEducation from "../components/Education";
 import PopulateCertificates from "../components/Certificates";
 import PopulateJobs from "../components/Jobs";
 import ResumeHeader from "../components/Info";
-import PopulateProjects from "../components/Projects";
+import PopulateProjects from "../components/ProjectCarousel";
 
 const Page = () => {
     return (

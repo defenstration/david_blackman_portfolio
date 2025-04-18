@@ -1,11 +1,11 @@
 'use client'
 
-// import path from 'path'
 import {useEffect, useRef, useState} from 'react'
 
 export default function CanvasBackground() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
     const [mode, setMode] = useState<'path' | 'pulse'>('pulse')
+    const dotMax = 25
 
     useEffect(() => {
         const canvas = canvasRef.current
@@ -32,7 +32,7 @@ export default function CanvasBackground() {
         const seeds = Array.from({length: 30}, () => ({
             x: Math.floor(Math.random()*cols) * gridSize,
             y: Math.floor(Math.random()*rows) * gridSize,
-         }))
+        }))
 
         const getClosestSeed = (x: number, y: number) => {
             let minDist = Infinity
@@ -46,9 +46,8 @@ export default function CanvasBackground() {
             })
             return index
         }
-        
-        const segments: {x1: number, y1: number, x2: number, y2: number}[] = []
 
+        const segments: {x1: number, y1: number, x2: number, y2: number}[] = []
 
         for (let x = 0; x < width; x += gridSize) {
             for (let y = 0; y < height; y+= gridSize) {
@@ -76,27 +75,30 @@ export default function CanvasBackground() {
             }
         }
 
-        const dots = segments.map((segment) => ({
+        const pulses = segments.map((segment) => ({
             ...segment,
             progress: Math.random(),
             speed: .005 + Math.random() * .01
         }))
 
-        const pathDots: typeof dots = []
-        let flash: {x: number; y: number; opacity: number} | null = null
+        type PathDot = typeof pulses[number] & {lastX?: number; lastY? : number; px?: number; py?: number}
+        const pathDots: PathDot[] = []
+        let flash: { x: number; y: number; opacity: number } | null = null
 
         const spawnPathDot = () => {
-            if (pathDots.length >= 2) return
+            if (pathDots.length >= dotMax) return
             const seg = segments[Math.floor(Math.random() * segments.length)]
             pathDots.push({
-                ...seg, 
+                ...seg,
                 progress: 0,
-                speed: 0.005 + Math.random() * 0.01
+                speed: 0.005 + Math.random() * 0.01,
+                lastX: seg.x1,
+                lastY: seg.y1
             })
         }
 
         const scheduleNextDot = () => {
-            const delay = 5000 + Math.random() * 3000
+            const delay = Math.random() * 3000
             setTimeout(() => {
                 spawnPathDot()
                 scheduleNextDot()
@@ -122,23 +124,66 @@ export default function CanvasBackground() {
                 ctx.stroke()
             })
 
-            const activeDots = mode === 'path' ? pathDots : dots
-    
-            activeDots.forEach((dot) => {
+            const activeDots = mode === 'pulse' ? pulses : pathDots
+
+            activeDots.forEach((dot, i) => {
                 dot.progress += dot.speed
                 if (dot.progress > 1) {
                     dot.progress = 0
                     if (mode === 'path') {
-                        const seg = segments[Math.floor(Math.random() * segments.length)]
-                        dot.x1 = seg.x1
-                        dot.y1 = seg.y1 
-                        dot.x2 = seg.x2
-                        dot.y2 = seg.y2
+                        const options = segments.filter(seg => {
+                            const match = 
+                                (seg.x1 === dot.x2 && seg.y1 === dot.y2) ||
+                                (seg.x2 === dot.x2 && seg.y2 === dot.y2)
+                            const notBack = 
+                                (seg.x1 !== dot.lastX || seg.y1 !== dot.lastY) &&
+                                (seg.x2 !== dot.lastX || seg.y2 !== dot.lastY)
+                            return match && notBack
+                        }
+                            
+                        )
+                        if (options.length > 0) {
+                            const next = options[Math.floor(Math.random() * options.length)]
+                            dot.lastX = dot.x2 
+                            dot.lastY = dot.y2
+                            
+                            dot.x1 = dot.x2
+                            dot.y1 = dot.y2
+                            dot.x2 = next.x1 === dot.x2 && next.y1 === dot.y2 ? next.x2 : next.x1
+                            dot.y2 = next.y1 === dot.y2 && next.x1 === dot.x2 ? next.y2 : next.y1
+                        } else {
+                            pathDots.splice(i, 1)
+                            return
+                        }
                     }
                 }
 
                 const x = dot.x1 + (dot.x2 - dot.x1) * dot.progress
                 const y = dot.y1 + (dot.y2 - dot.y1) * dot.progress
+                dot.px = x
+                dot.py = y
+
+                // Collision detection
+                for (let j = 0; j < activeDots.length; j++) {
+                    if (i === j) continue;
+                    const otherDot = activeDots[j];
+                    if (otherDot.px !== undefined && otherDot.py !== undefined) {
+                        const dx = x - otherDot.px;
+                        const dy = y - otherDot.py;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        const collisionRadius = 4; 
+    
+                    if (mode === 'path' && distance < collisionRadius) {
+                        // Handle collision (e.g., reverse direction, stop, or bounce)
+                        const [a, b] = pathDots
+                        dot.progress -= dot.speed; // Example: reverse progress slightly
+                        otherDot.progress -= otherDot.speed;
+                        flash = {x: (a.px + b.px) /2, y: (a.py! + b.py!) / 2, opacity: 1}
+                        pathDots.length = 0
+                        break;
+                    }
+                    }
+                }
 
                 ctx.beginPath()
                 ctx.shadowBlur = 10
@@ -149,29 +194,28 @@ export default function CanvasBackground() {
                 ctx.shadowBlur = 0
             })
 
-            if (mode === 'path' && pathDots.length === 2) {
-                const [a, b] = pathDots
-                const ax = a.x1 + (a.x2 - a.x1) * a.progress
-                const ay = a.y1 + (a.y2 - a.y1) * a.progress
-                const bx = b.x1 + (b.x2 - b.x1) * b.progress
-                const by = b.y1 + (b.y2 - b.y1) * b.progress
-                const dist = Math.hypot(ax - bx, ay - by)
 
-                if (dist < 10 && !flash) {
-                    flash = {x: (ax + bx) /2, y: (ay + by) / 2, opacity: 1}
-                    pathDots.length = 0
-                }
-            }
+
+            // if (mode === 'path' && pathDots.length === dotMax) {
+            //     const [a, b] = pathDots
+            //     if (a.px !== undefined && b.px !== undefined) {
+            //         const dx = a.px - b.px
+            //         const dy = a.py! - b.py!
+            //         const dist = Math.sqrt(dx * dx + dy * dy)
+            //         if (dist < 6 && !flash) {
+            //             flash = { x: (a.px + b.px) / 2, y: (a.py! + b.py!) / 2, opacity: 1 }
+            //             pathDots.length = 0
+            //         }
+            //     }
+            // }
 
             if (flash) {
                 ctx.beginPath()
-                ctx.fillStyle = `rgba(255, 255, 255, ${flash.opacity})`
+                ctx.fillStyle = `rgba(255,255,255,${flash.opacity})`
                 ctx.arc(flash.x, flash.y, 20, 0, Math.PI * 2)
                 ctx.fill()
-                flash.opacity -= .05 
-                if (flash.opacity <= 0) {
-                    flash = null
-                }
+                flash.opacity -= 0.05
+                if (flash.opacity <= 0) flash = null
             }
 
             requestAnimationFrame(animate)
@@ -181,22 +225,20 @@ export default function CanvasBackground() {
 
         return () => {
             window.removeEventListener('resize', resizeCanvas)
-
         }
     }, [mode])
 
     return (
         <>
-        <canvas
-            ref = {canvasRef}
-            className = 'fixed inset-0 z-[-1]' />
-        <button 
-            onClick = {() => setMode(mode === 'path' ? 'pulse' : 'path')}
-            className = 'absolute top-4 left-4 bg-white text-black p-2 rounded'>
+            <canvas
+                ref = {canvasRef}
+                className = 'fixed inset-0 z-[-10] bg-slate-900' />
+            <button
+                onClick={() => setMode(mode === 'path' ? 'pulse' : 'path')}
+                className="fixed top-4 right-4 z-10 px-4 py-2 bg-black text-cyan-300 border border-cyan-500 rounded"
+            >
                 Mode: {mode === 'path' ? 'Path (2 Dots)' : 'Pulse (Multiple Dots)'}
-        </button>
-
+            </button>
         </>
     )
-
 }
