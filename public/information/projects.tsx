@@ -40,7 +40,7 @@ export const projects: Project[] = [
             width: 338,
         },
         screenshot: {
-            src: "/assets/lead_tracker.png",
+            src: "/assets/lead_tracker_screenshot.png",
             alt: "Thumbnail for lead tracker app",
             height: 258,
             width: 338,

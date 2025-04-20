@@ -1,6 +1,7 @@
 'use client'
 
 import {useEffect, useRef, useState} from 'react'
+import {Dot} from '@/app/types'
 
 export default function CanvasBackground() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -75,13 +76,17 @@ export default function CanvasBackground() {
             }
         }
 
-        const pulses = segments.map((segment) => ({
+        const pulses: Dot[] = segments.map((segment) => ({
             ...segment,
             progress: Math.random(),
-            speed: .005 + Math.random() * .01
+            speed: .005 + Math.random() * .01,
+            lastX: segment.x1,
+            lastY: segment.y1,
+            px: undefined,
+            py: undefined
         }))
 
-        type PathDot = typeof pulses[number] & {lastX?: number; lastY? : number; px?: number; py?: number}
+        type PathDot = typeof pulses[number] & {lastX?: number; lastY?: number; px?: number; py?: number}
         const pathDots: PathDot[] = []
         let flash: { x: number; y: number; opacity: number } | null = null
 
@@ -93,7 +98,9 @@ export default function CanvasBackground() {
                 progress: 0,
                 speed: 0.005 + Math.random() * 0.01,
                 lastX: seg.x1,
-                lastY: seg.y1
+                lastY: seg.y1,
+                px: undefined,
+                py: undefined
             })
         }
 
@@ -178,7 +185,7 @@ export default function CanvasBackground() {
                         const [a, b] = pathDots
                         dot.progress -= dot.speed; // Example: reverse progress slightly
                         otherDot.progress -= otherDot.speed;
-                        flash = {x: (a.px + b.px) /2, y: (a.py! + b.py!) / 2, opacity: 1}
+                        flash = {x: ((a.px ?? 0) + (b.px ?? 0)) / 2, y: ((a.py ?? 0) + (b.py ?? 0)) / 2, opacity: 1}
                         pathDots.length = 0
                         break;
                     }
@@ -193,21 +200,6 @@ export default function CanvasBackground() {
                 ctx.fill()
                 ctx.shadowBlur = 0
             })
-
-
-
-            // if (mode === 'path' && pathDots.length === dotMax) {
-            //     const [a, b] = pathDots
-            //     if (a.px !== undefined && b.px !== undefined) {
-            //         const dx = a.px - b.px
-            //         const dy = a.py! - b.py!
-            //         const dist = Math.sqrt(dx * dx + dy * dy)
-            //         if (dist < 6 && !flash) {
-            //             flash = { x: (a.px + b.px) / 2, y: (a.py! + b.py!) / 2, opacity: 1 }
-            //             pathDots.length = 0
-            //         }
-            //     }
-            // }
 
             if (flash) {
                 ctx.beginPath()
