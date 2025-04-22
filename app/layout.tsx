@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/Header"
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 import CanvasBackground from "./components/CanvasBackground";
 
 
@@ -22,11 +22,11 @@ export default function RootLayout({
       <body className={`antialiased grid w-full h-auto min-h-dvh bg-transparent`}>
       <CanvasBackground />
         <Header />
-        <main className = "flex">
+        <main>
           <Navbar />
           {children}
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
