@@ -1,4 +1,4 @@
-export type job = {
+export type Job = {
     id: number
     position: string;
     business: string;

@@ -14,6 +14,10 @@ nextjs-portal {
   z-index: -1000;
 }
 
+.section-wrapper {
+  @apply w-full flex flex-col gap-4 items-center justify-center border-2 border-gray-500 bg-slate-900/30 backdrop-blur-sm rounded-2xl shadow-md overflow-hidden
+}
+
 /* #hero-pic-container, #my-pic-container {
   height: 400px;
   width: 400px; 

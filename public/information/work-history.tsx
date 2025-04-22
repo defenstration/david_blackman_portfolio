@@ -1,6 +1,6 @@
-import { job } from "@/app/types"
+import { Job } from "@/app/types"
 
-export const jobs: job[] = [
+export const jobs: Job[] = [
     {
         id: 1,
         position: "Waste Management Program Assistant",
