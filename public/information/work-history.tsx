@@ -1,9 +1,14 @@
-export const jobs = [
+import { job } from "@/app/types"
+
+export const jobs: job[] = [
     {
+        id: 1,
         position: "Waste Management Program Assistant",
         business: "Chenango County Department of Public Works",
         location: "Norwich, NY",
-        tenure: "November 2023 to Present",
+        startDate: "November 2023",
+        endDate: "Present",
+        description: "Assisted the Chenango County Department of Public Works with the Waste Management Program, including the Household Hazardous Waste Collection event and recycling outreach",
         duties: [
             "Reduced reporting labor by 50% by developing standard work processes to streamline monthly report generation", 
             "Generated monthly and annual reports for Chenango County Supervisory Committee and NYSDEC",
@@ -12,49 +17,80 @@ export const jobs = [
             "Ensured landfill and transfer station compliance to NYSDEC part 360 regulations ",
             "Oversee bidding process to maximize income from recycling centers"
         ],
-        promotions: null,
+        skills: [
+            "Microsoft Excel",
+            "Microsoft Word",
+            "Microsoft PowerPoint",
+            "Google Workspace",
+            "Municipal Budgeting",
+            "Sales and Marketing",
+            "Project Management",
+        ],
         additionalRoles: [
             "Weigh Station Operator"
         ],
     }, {
+        id: 2,
         position: "Assistant Production Manager",
         business: "Bloom Owl",
         location: "Norwich, NY",
-        tenure: "November 2022 to November 2023",
+        startDate: "November 2022",
+        endDate: "November 2023",
+        description: "Assisted the Production Manager with day-to-day operations of a small manufacturing facility, including production scheduling, inventory management, and quality assurance",
+        skills: [],
         duties: [
             "Led selection and implementation of an integrated ERP system, including a full inventory audit, BOM and standard work creation",
             "Operate and maintain CNC routers, large-format laser printers, and laser cutting equipment",
             "Ensured product quality with visual and tactile inspections, performing corrective actions when required"
         ],
-        promotions: "Manufacturing Specialist to Assistant Production Manager - June 2023",
         additionalRoles: ["Manufacturing Specialist"],
     }, {
+        id: 3,
         position: "CNC Machinist",
         business: "Amphenol Aerospace",
         location: "Sidney, NY",
-        tenure: "March 2022 to November 2022",
+        startDate: "March 2022",
+        endDate: "November 2022",
+        description: "Operated and maintained CNC lathes, ensuring part compliance using micrometers, calipers, comparators, and gauging",
+        skills: [],
         duties: [
             "Setup, operate, and maintain CNC lathes",
             "Ensured part compliance using micrometers, calipers, comparators, and gauging"
         ],
-        promotions: null,
-        additionalRoles: null,
+
     }, {
+        id: 4,
         position: "Manufacturing Supervisor",
         business: "The Raymond Corporation",
         location: "Greene, NY",
-        tenure: "May 2021 to March 2022",
+        startDate: "May 2021",
+        endDate: "March 2022",
+        description: "Supervised a team of 20+ employees in a fast-paced manufacturing environment, ensuring production goals were met while maintaining quality and safety standards",
+        skills: [],
         duties: [
             "Setup, operate, and maintain CNC lathes",
             "Ensured part compliance using micrometers, calipers, comparators, and gauging"
         ],
-        promotions: null,
-        additionalRoles: null,
     }, {
+        id: 5,
         position: "Senior Welder",
         business: "GE Aviation",
         location: "Norwich, NY",
-        tenure: "October 2008 to May 2021",
+        startDate: "October 2008",
+        endDate: "May 2021",
+        description: "Worked in a fast-paced manufacturing environment, producing high-quality TIG welded assemblies and performing mechanical and electrical inspections",
+        skills: [
+            "Lean Manufacturing",
+            "Root Cause Analysis",
+            "Value Stream Mapping",
+            "Production Scheduling",
+            "Inventory Management",
+            "Quality Assurance",
+            "Mechanical Inspection",
+            "Electrical Inspection",
+            "TIG Welding",
+            "Laser Welding"
+        ],
         duties: [
             "Utilized Oracle and Spotfire to obtain production data and coordinate production processes",
             "Using Lean Manufacturing methodologies, determined optimal work order lot sizes to significantly reduce congestion at bottlenecks",
@@ -77,10 +113,6 @@ export const jobs = [
             "Assembled and wound coils for alternator assemblies",
             "Performed vacuum impregnation processes for rotor assemblies",
         ],
-        promotions: [
-            "Solderer to Welder - 2010",
-            "Welder to Senior Welder - 2019",
-        ],
         additionalRoles: [
             "Production Focal",
             "Lean Focal",
@@ -88,10 +120,13 @@ export const jobs = [
             "Team Facilitator"
         ]
     }, {
+        id: 6,
         position: "Owner/Operator",
         business: "Black Wolf Gaming, LLC",
         location: "Oxford, NY",
-        tenure: "January 2015 to April 2018",
+        startDate: "January 2015",
+        endDate: "April 2018",
+        description: "Owned and operated a small business specializing in tabletop gaming, including board games, card games, and miniature wargames",
         duties: [
             "Coordinated weekly, monthly, and quarterly tournaments for multiple tabletop board, card, and war games ",
             "Marketed events through social media and in-store promotions",
@@ -101,11 +136,46 @@ export const jobs = [
             "Coordinated event schedules with similar surrounding stores to minimize competing tournament schedules, allowing players to maximize their time playing the games they love",
             "Adapted to rapidly shifting landscape in the collectible trading game market through diversification of products and events",
         ],
-        promotions: null,
+        skills: [
+            "Social Media Marketing",
+            "Event Planning",
+            "Inventory Management",
+            "Customer Service",
+            "Sales",
+            "Procurement",
+            "Tax Documentation",
+        ],
         additionalRoles: [
             "Cashier",
             "Tournament Organizer",
             "DCI Judge",
+        ],
+    }, {
+        id: 7,
+        position: "Web Developer",
+        business: "Redline Web Design",
+        location: "Remote",
+        startDate: "April 2025",
+        endDate: "Present",
+        description: "Developed and maintained websites for small businesses, including e-commerce sites, blogs, and portfolio sites",
+        skills: [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "React",
+            "Next.js",
+            "Node.js",
+            "Express.js",
+            "MongoDB",
+            "MySQL",
+            "PostgreSQL",
+        ],
+        duties: [
+            "Developed and maintained websites for small businesses, including e-commerce sites, blogs, and portfolio sites",
+            "Worked with clients to determine their needs and develop custom solutions",
+            "Provided ongoing support and maintenance for existing clients",
+            "Developed and maintained a portfolio of work to showcase skills and attract new clients",
+            "Utilized social media and online marketing to promote services and attract new clients",
         ],
     }
 ]

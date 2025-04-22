@@ -1,4 +1,4 @@
-import {education} from "../../public/information/education"
+import {education} from "../../../public/information/education"
 
 const PopulateEducation = () => {
     return (
