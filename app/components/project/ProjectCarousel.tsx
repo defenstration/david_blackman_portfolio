@@ -7,7 +7,7 @@ export default function ProjectsCarousel() {
     // const [slides, setSlides] = useState(projects)
 
     return (
-        <section id = "resume-carousel" className = "section-wrapper">
+        <section id="projects" className="section-wrapper">
             <h1 className = 'text-center bg-black w-full'>Projects</h1>
             <div id = 'carousel-wrapper' className = "flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide">
                 {projects.map((project, index) => (
@@ -17,4 +17,3 @@ export default function ProjectsCarousel() {
         </section>
     )
 }
-

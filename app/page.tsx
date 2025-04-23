@@ -9,7 +9,7 @@ import HeroSection from "./components/HeroSection";
 
 export default function Home() {
   return (
-    <div className = "flex flex-col gap-4 ml-32 items-center justify-center w-[100%-2rem]">
+    <div >
       <HeroSection />
       <ProjectsCarousel />
       <EducationSection />

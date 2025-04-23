@@ -15,7 +15,7 @@ nextjs-portal {
 }
 
 .section-wrapper {
-  @apply w-full flex flex-col gap-4 items-center justify-center border-2 border-gray-500 bg-slate-900/30 backdrop-blur-sm rounded-2xl shadow-md overflow-hidden
+  @apply w-full max-w-6xl mx-auto my-8 flex flex-col gap-4 items-center justify-center border-2 border-gray-500 bg-slate-900/30 backdrop-blur-sm rounded-2xl shadow-md overflow-hidden
 }
 
 /* #hero-pic-container, #my-pic-container {

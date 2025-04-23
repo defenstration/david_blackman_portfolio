@@ -21,9 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased grid w-full h-auto min-h-dvh bg-transparent`}>
       <CanvasBackground />
-        <Header />
+        {/* <Header /> */}
         <main>
-          <Navbar />
+          {/* <Navbar /> */}
           {children}
         </main>
         {/* <Footer /> */}
