@@ -17,7 +17,7 @@ export default function HeroSection() {
             <div className="flex flex-col md:flex-row items-center justify-between w-full gap-8">
                 {/* Left side - Text content */}
                 <div className={`flex flex-col gap-4 max-w-2xl transition-all duration-700 delay-300 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
-                    <h1 className="text-5xl font-bold text-white bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">
+                    <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">
                         {info.name}
                     </h1>
                     <h2 className="text-2xl text-gray-300">Full Stack Developer</h2>
