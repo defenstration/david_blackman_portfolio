@@ -17,4 +17,6 @@ export type Project = {
     thumbnail: ImageAsset;
     screenshot: ImageAsset;
     link: string;
+    siteUrl: string;
+    github: string;
 }
