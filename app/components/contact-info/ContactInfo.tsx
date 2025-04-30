@@ -6,7 +6,7 @@ import { info } from "@/public/information/information"
 export default function ContactInfo() {
     return (
         <section id = "contact-info" className = "section-wrapper">
-            <h2 className = "text-center text-2xl font-bold w-full bg-black">Contact Information</h2>
+            <h2 className = "text-center bg-black w-full text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">Contact Information</h2>
             <div className = "flex justify-evenly w-full">
                 <div>
                     <h2 className = "text-2xl">{info.name}</h2>
