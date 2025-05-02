@@ -85,7 +85,7 @@ export default function ProjectsCarousel() {
 
     return (
         <section id="projects" className="section-wrapper">
-            <h1 className="text-center bg-black w-full text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">Projects</h1>
+            <h1 className="section-header">Projects</h1>
             <div className="relative w-full">
                 {!isMobile && (
                     <>

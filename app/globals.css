@@ -15,7 +15,11 @@ nextjs-portal {
 }
 
 .section-wrapper {
-  @apply w-full max-w-6xl mx-auto my-8 flex flex-col gap-4 items-center justify-center border-2 border-gray-500 bg-slate-900/30 backdrop-blur-sm rounded-2xl shadow-md overflow-hidden
+  @apply w-full max-w-6xl mx-auto my-8 flex flex-col gap-4 items-center justify-center border-2 border-gray-500 bg-slate-900/30 backdrop-blur-md rounded-2xl shadow-md overflow-hidden
+}
+
+.section-header {
+  @apply text-center bg-black w-full text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent 
 }
 
 /* #hero-pic-container, #my-pic-container {
